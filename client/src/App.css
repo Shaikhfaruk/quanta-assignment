@@ -1,0 +1,147 @@
+:root {
+  --primary-color: #185ee0;
+  --secondary-color: #e6eef9;
+  --navbar-color: #00c8ab;
+  --nav-bg: #076355;
+  --link-focus: #8b8b8b;
+  --alert: #f80759;
+}
+
+*,
+*:after,
+*:before,
+html,
+body {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  overflow: inherit;
+  font-family: "Rubik", sans-serif;
+}
+a {
+  text-decoration: none;
+  color: var(--navbar-color);
+}
+
+.login-container {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.form-box {
+  width: 350px;
+  height: 425px;
+  position: relative;
+  margin: 6%;
+  background: var(--secondary-color);
+  padding: 5px;
+  overflow: hidden;
+}
+.button-box {
+  width: 240px;
+  margin: 35px auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  box-shadow: 0 0 20px 9px var(--link-focus);
+  border-radius: 30px;
+}
+.toggle-btn {
+  padding: 10px 30px;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  outline: none;
+  position: relative;
+}
+.social-icons {
+  margin: 30px auto;
+  text-align: center;
+  display: flex;
+  justify-content: space-evenly;
+}
+.social-icon {
+  width: 30px;
+  font-size: 1.5em;
+  margin: 0 12px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+.social-icon:nth-child(1) {
+  color: #3b5998;
+}
+.social-icon:nth-child(3) {
+  color: #1da1f2;
+}
+.input-group {
+  top: 135px;
+  position: absolute;
+  width: 280px;
+  transition: 0.5s;
+}
+.input-field {
+  width: 100%;
+  padding: 10px 0;
+  margin: 5px 0;
+  border-bottom: 1px solid #999;
+  border-top: 0;
+  border-right: 0;
+  border-left: 0;
+  outline: none;
+  background: transparent;
+}
+.submit-btn {
+  width: 85%;
+  padding: 10px 30px;
+  cursor: pointer;
+  display: block;
+  margin: auto;
+  background: var(--navbar-color);
+  border: 0;
+  outline: none;
+  border-radius: 30px;
+  color: var(--secondary-color);
+}
+.check-box {
+  margin: 30px 10px 30px 0;
+}
+.input-group span {
+  color: #777;
+  font-size: 12px;
+}
+#login,
+#register {
+  left: 30px;
+}
+.checkbox-div {
+  display: flex;
+  align-items: center;
+}
+.errors {
+  color: var(--alert);
+}
+.form-success {
+  display: flex;
+  justify-content: center;
+  margin-top: 250px;
+  min-width: 370px;
+  color: var(--alert);
+}
+.app-wrapper {
+  background-color: var(--secondary-color);
+  min-width: 350px;
+  min-height: 650px;
+  padding: 35px;
+  border-radius: 5px;
+}
+.success-container {
+  background: var(--nav-bg);
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
