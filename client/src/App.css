@@ -145,3 +145,10 @@ a {
   align-items: center;
   justify-content: center;
 }
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 8vh;
+}
