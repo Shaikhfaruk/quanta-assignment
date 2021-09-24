@@ -6,42 +6,46 @@ import { useHistory } from "react-router-dom";
 
 const Register = () => {
   const history = useHistory();
-  const [values, setValues] = useState({
+
+  const [data, setData] = useState({
     name: "",
     email: "",
     password: "",
+    error: "",
   });
+
+  const { name, email, password, error } = data;
 
   const [errors, setErrors] = useState({});
 
   const handleChange = (event) => {
-    setValues({
-      ...values,
+    setData({
+      ...data,
       [event.target.name]: event.target.value,
     });
   };
 
-  const handleFormSubmit = (event) => {
-    const { name, email, password } = values;
-
-    if (name && email && password) {
-      axios.post("http://localhost:3000/register", values).then((res) => {
-        console.log(res);
-        alert(res.data.message);
-        history.push("/login");
-      });
-    } else {
-      alert("error");
+  const handleSubmit = async (event) => {
+    console.log(data);
+    event.preventDefault();
+    setErrors(validator(data));
+    try {
+      setData({ ...data, error: null });
+      await axios.post(
+        "/auth/register",
+        { name, email, password },
+        {
+          headers: {
+            "Content-type": "application/json",
+          },
+        }
+      );
+      history.push("/login");
+    } catch (err) {
+      setData({ ...data, error: err.response.data.err });
     }
-    console.log(values);
-    event.preventDefault();
-    setErrors(validator(values));
   };
 
-  const onSubmit = (event) => {
-    event.preventDefault();
-    console.log("user Register successfully");
-  };
   return (
     <>
       <div className="login-container">
@@ -49,13 +53,13 @@ const Register = () => {
           <div className="button-box">
             <Navbar />
           </div>
-          <form id="register" className="input-group" onSubmit={onSubmit}>
+          <form id="register" className="input-group">
             <input
               type="text"
               className="input-field"
               placeholder="Full Name"
               name="name"
-              value={values.name}
+              value={name}
               onChange={handleChange}
               required
             />
@@ -65,7 +69,7 @@ const Register = () => {
               className="input-field"
               placeholder="Email Id"
               name="email"
-              value={values.email}
+              value={email}
               onChange={handleChange}
               required
             />
@@ -75,7 +79,7 @@ const Register = () => {
               className="input-field"
               placeholder="Password"
               name="password"
-              value={values.password}
+              value={password}
               onChange={handleChange}
               required
             />
@@ -89,10 +93,8 @@ const Register = () => {
               <span>I agree to the terms and conditions</span>
             </div>
 
-            <button
-              type="submit"
-              className="submit-btn"
-              onClick={handleFormSubmit}>
+            {error ? <p className="errors">{error}</p> : null}
+            <button type="submit" className="submit-btn" onClick={handleSubmit}>
               Register
             </button>
           </form>

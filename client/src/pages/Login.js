@@ -1,26 +1,48 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import validator from "../components/validator";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 const Login = () => {
-  const [values, setValues] = useState({
-    fullname: "",
+  const history = useHistory();
+  const [data, setData] = useState({
     email: "",
     password: "",
+    error: null,
   });
+
+  const { email, password, error } = data;
 
   const [errors, setErrors] = useState({});
 
   const handleChange = (event) => {
-    setValues({
-      ...values,
+    setData({
+      ...data,
       [event.target.name]: event.target.value,
     });
   };
 
-  const handleFormSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    setErrors(validator(values));
+    setErrors(validator(data));
+
+    try {
+      setData({ ...data, error: null });
+      const res = await axios.post(
+        "/auth/login",
+        { email, password },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      localStorage.setItem("token", res.data.token);
+      history.push("/");
+    } catch (err) {
+      setData({ ...data, error: err.response.data.err });
+    }
   };
   return (
     <>
@@ -36,7 +58,7 @@ const Login = () => {
               className="input-field"
               placeholder="Email Id"
               name="email"
-              value={values.email}
+              value={email}
               onChange={handleChange}
               required
             />
@@ -46,7 +68,7 @@ const Login = () => {
               className="input-field"
               placeholder="Password"
               name="password"
-              value={values.password}
+              value={password}
               onChange={handleChange}
               required
             />
@@ -59,10 +81,8 @@ const Login = () => {
               />
               <span>Remember Password</span>
             </div>
-            <button
-              type="submit"
-              className="submit-btn"
-              onClick={handleFormSubmit}>
+            {error ? <p className="errors">{error}</p> : null}
+            <button type="submit" className="submit-btn" onClick={handleSubmit}>
               Login
             </button>
           </form>
